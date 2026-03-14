@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZwischenTon — Das Magazin für Nuancen</title>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,300;7..72,400;7..72,500;7..72,600&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#F2F0E9;--surface:#FFFFFF;--card:#FFFFFF;
+  --ink:#2D2A24;--mid:#3D3A34;
+  --border:#DAD5CC;--border2:#CAC2B8;
+  --accent:#A6876E;--accent2:#866B54;
+  --accent-light:#F0E8E0;
+  --accent-soft:#CAB8A8;
+  --accent-glow:rgba(166,135,110,0.15);
+  --muted:#7A7268;--light:#9A9288;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.7}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="none" stroke="%23A6876E" stroke-width="0.3" opacity="0.05"/><circle cx="50" cy="50" r="20" fill="none" stroke="%23A6876E" stroke-width="0.3" opacity="0.05"/></svg>');background-size:200px 200px;pointer-events:none;z-index:-1}
+
+/* SOFT TOP BAR */
+.top-bar{background:var(--surface);color:var(--muted);padding:12px 0;border-bottom:1px solid var(--border)}
+.tb-inner{max-width:1400px;margin:0 auto;padding:0 50px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.tb-left i{margin-right:8px;color:var(--accent)}
+.tb-right{display:flex;gap:32px}
+.tb-right a{color:var(--muted);text-decoration:none;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;transition:color .3s}
+.tb-right a:hover{color:var(--accent)}
+.tb-right i{margin-right:6px}
+
+/* SOFT HEADER */
+header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200}
+.hdr{max-width:1400px;margin:0 auto;padding:25px 50px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.logo{text-decoration:none;position:relative}
+.logo::after{content:'';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:80px;height:2px;background:linear-gradient(90deg, transparent, var(--accent), transparent)}
+.logo-name{font-family:'Literata',serif;font-size:52px;font-weight:400;color:var(--ink);letter-spacing:-0.5px;line-height:1}
+.logo-name span{color:var(--accent);font-style:italic}
+.logo-sub{font-size:12px;color:var(--accent);letter-spacing:6px;text-transform:uppercase;margin-top:10px}
+.hdr-right{display:flex;align-items:center;gap:16px}
+.hdr-search{position:relative}
+.hdr-search input{padding:12px 22px;padding-right:50px;border:1px solid var(--border);border-radius:40px;font-size:14px;width:280px;background:var(--bg);font-family:'Inter',sans-serif;transition:all .3s}
+.hdr-search input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 5px var(--accent-glow);background:var(--surface)}
+.hdr-search i{position:absolute;right:20px;top:50%;transform:translateY(-50%);color:var(--light)}
+.hdr-cta{background:var(--accent);color:#fff;padding:12px 30px;border-radius:40px;font-size:13px;font-weight:600;letter-spacing:1.5px;text-decoration:none;transition:all .3s}
+.hdr-cta:hover{background:var(--accent2);transform:scale(0.97)}
+.hdr-cta i{margin-right:8px}
+.hamburger{display:none;flex-direction:column;gap:6px;cursor:pointer;background:none;border:none;padding:8px}
+.hamburger span{display:block;width:26px;height:2px;background:var(--ink);border-radius:2px}
+
+/* SOFT NAV */
+nav{background:var(--surface);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1400px;margin:0 auto;padding:0 50px;display:flex;align-items:center;justify-content:space-between}
+.nav-links{display:flex}
+.nav-links a{padding:16px 24px;color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;letter-spacing:0.5px;transition:all .3s;border-right:1px solid var(--border);position:relative}
+.nav-links a:last-child{border-right:none}
+.nav-links a:hover{color:var(--accent)}
+.nav-links a.active{color:var(--accent)}
+.nav-links a.active::after{content:'';position:absolute;bottom:-1px;left:30%;width:40%;height:2px;background:var(--accent);border-radius:2px}
+.nav-icon{display:flex;gap:20px}
+.nav-icon a{color:var(--light);font-size:16px;transition:all .3s}
+.nav-icon a:hover{color:var(--accent);transform:translateY(-3px)}
+.mobile-nav{display:none;background:var(--surface);border-top:1px solid var(--border);padding:16px 50px;flex-direction:column}
+.mobile-nav a{display:block;padding:14px 0;color:var(--muted);text-decoration:none;font-size:15px;border-bottom:1px solid var(--border)}
+.mobile-nav a:hover{color:var(--accent)}
+.mobile-nav.open{display:flex}
+
+/* SOFT HERO */
+.hero{max-width:1400px;margin:60px auto 0;padding:0 50px;display:grid;grid-template-columns:1.4fr 0.6fr;gap:30px}
+.hero-feature{background:var(--surface);border:1px solid var(--border);border-radius:30px;cursor:pointer;transition:all .4s;position:relative;overflow:hidden}
+.hero-feature:hover{transform:translateY(-8px);border-color:var(--accent);box-shadow:0 30px 50px -30px var(--accent)}
+.hero-feature-img{height:300px;background:linear-gradient(135deg, var(--accent-light), var(--surface));position:relative;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center}
+.hfi-icon{font-size:90px;color:var(--accent);opacity:.2}
+.hfi-label{position:absolute;bottom:20px;left:30px;background:var(--accent);color:#fff;padding:8px 24px;border-radius:40px;font-size:12px;font-weight:600;letter-spacing:2px}
+.hero-feature-body{padding:40px}
+.hero-cat{display:inline-block;color:var(--accent);font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px}
+.hero-title{font-family:'Literata',serif;font-size:44px;font-weight:400;color:var(--ink);line-height:1.1;margin-bottom:18px;letter-spacing:-0.5px}
+.hero-excerpt{font-size:16px;line-height:1.7;color:var(--muted);margin-bottom:24px}
+.hero-meta{display:flex;align-items:center;gap:24px;font-size:14px;color:var(--light);padding-top:20px;border-top:1px solid var(--border)}
+.hero-meta strong{color:var(--accent);font-weight:600}
+.hero-meta i{margin-right:6px;color:var(--accent)}
+.hero-side{display:flex;flex-direction:column;gap:15px}
+.hs-item{background:var(--surface);border:1px solid var(--border);border-radius:30px;padding:28px;cursor:pointer;transition:all .3s}
+.hs-item:hover{background:var(--bg);border-color:var(--accent);padding-left:35px;box-shadow:0 15px 30px -20px var(--accent)}
+.hs-item:first-child{border-left:3px solid var(--accent)}
+.hsi-cat{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.hsi-title{font-family:'Literata',serif;font-size:22px;font-weight:400;color:var(--ink);line-height:1.25;margin-bottom:10px}
+.hsi-meta{font-size:12px;color:var(--light)}
+.hsi-meta i{margin-right:4px;font-size:11px}
+.hero-empty{max-width:1400px;margin:60px auto 0;padding:0 50px;display:none}
+.hero-empty-inner{background:var(--surface);border:2px dashed var(--border2);border-radius:50px;padding:100px;text-align:center}
+.hero-empty-inner h3{font-family:'Literata',serif;font-size:44px;font-weight:400;color:var(--ink);margin-bottom:16px}
+.hero-empty-inner p{color:var(--muted);font-size:16px}
+
+/* NUANCE LINE */
+.nuance-line{background:var(--accent-light);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 0;margin-top:60px}
+.nl-inner{max-width:1400px;margin:0 auto;padding:0 50px;display:flex;align-items:center;justify-content:space-between;overflow-x:auto;gap:40px}
+.nl-item{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:14px;font-weight:400;white-space:nowrap}
+.nl-item i{color:var(--accent);font-size:14px}
+.nl-item span{background:var(--accent);color:#fff;padding:4px 14px;border-radius:40px;font-size:10px;font-weight:600;letter-spacing:1px}
+
+/* MAIN LAYOUT - SOFT */
+.main{max-width:1400px;margin:70px auto;padding:0 50px;display:grid;grid-template-columns:1fr 340px;gap:50px}
+.sec-hd{display:flex;align-items:center;gap:16px;margin-bottom:35px}
+.sec-hd-icon{width:40px;height:40px;background:var(--accent-light);border-radius:30px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:18px}
+.sec-hd-title{font-family:'Literata',serif;font-size:26px;font-weight:400;color:var(--ink);letter-spacing:-0.3px}
+.sec-hd-line{flex:1;height:1px;background:linear-gradient(90deg, var(--border), transparent)}
+.sec-hd-count{font-size:13px;color:var(--light);font-weight:400}
+
+/* POST CARDS - SOFT */
+.posts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:30px}
+.post-card{background:var(--surface);border:1px solid var(--border);border-radius:30px;cursor:pointer;transition:all .4s;position:relative;overflow:hidden}
+.post-card:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 20px 40px -30px var(--accent)}
+.post-card-img{height:200px;background:linear-gradient(135deg, var(--accent-light), var(--surface));position:relative;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pci-icon{font-size:60px;color:var(--accent);opacity:.2;transition:transform .5s}
+.post-card:hover .pci-icon{transform:scale(1.1)}
+.pci-cat{position:absolute;top:18px;left:18px;background:var(--accent);color:#fff;padding:6px 16px;border-radius:30px;font-size:10px;font-weight:600;letter-spacing:1.5px}
+.post-card-body{padding:28px}
+.pc-meta{display:flex;align-items:center;gap:12px;margin-bottom:12px;font-size:12px;color:var(--light)}
+.pc-meta i{margin-right:4px;color:var(--accent);font-size:11px}
+.pc-title{font-family:'Literata',serif;font-size:24px;font-weight:400;color:var(--ink);line-height:1.2;margin-bottom:12px;transition:color .3s}
+.post-card:hover .pc-title{color:var(--accent)}
+.pc-exc{font-size:13px;line-height:1.7;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:18px}
+.pc-foot{display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid var(--border)}
+.pc-author{font-size:12px;font-weight:500;color:var(--light)}
+.pc-author i{margin-right:4px;color:var(--accent)}
+.pc-read{font-size:12px;font-weight:600;color:var(--accent);text-decoration:none;letter-spacing:1px;text-transform:uppercase;display:flex;align-items:center;gap:6px;transition:gap .3s}
+.post-card:hover .pc-read{gap:10px}
+.pc-read i{font-size:11px}
+.empty-state{text-align:center;padding:100px;background:var(--surface);border:1px solid var(--border);border-radius:50px;grid-column:1/-1}
+.empty-state h3{font-family:'Literata',serif;font-size:38px;font-weight:400;color:var(--ink);margin-bottom:12px}
+.empty-state p{color:var(--muted);font-size:15px}
+
+/* SIDEBAR - SOFT */
+.sidebar{display:flex;flex-direction:column;gap:30px}
+.widget{background:var(--surface);border:1px solid var(--border);border-radius:30px;overflow:hidden}
+.w-hd{padding:20px 24px;border-bottom:1px solid var(--border);background:var(--bg);display:flex;align-items:center;gap:12px}
+.w-hd i{color:var(--accent);width:22px;font-size:18px}
+.w-hd-title{font-family:'Literata',serif;font-size:20px;font-weight:400;color:var(--ink)}
+.w-body{padding:24px}
+.wi{padding:16px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:all .3s}
+.wi:last-child{border-bottom:none;padding-bottom:0}
+.wi:hover{padding-left:8px;background:var(--bg)}
+.wi-cat{font-size:9px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);margin-bottom:5px}
+.wi-title{font-family:'Literata',serif;font-size:18px;font-weight:400;color:var(--ink);line-height:1.2;text-decoration:none;display:block;margin-bottom:5px}
+.wi-title:hover{color:var(--accent)}
+.wi-meta{font-size:11px;color:var(--light)}
+.wi-meta i{margin-right:4px;font-size:10px}
+.about-box{background:var(--accent-light);border:1px solid var(--border);border-radius:30px;padding:32px;text-align:center}
+.ab-title{font-family:'Literata',serif;font-size:26px;font-weight:400;color:var(--ink);margin-bottom:16px;letter-spacing:-0.3px}
+.ab-text{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:24px}
+.ab-link{display:inline-block;color:var(--accent);font-weight:600;font-size:13px;text-decoration:none;text-transform:uppercase;letter-spacing:1.5px;transition:all .3s}
+.ab-link i{margin-left:8px;transition:margin .3s}
+.ab-link:hover i{margin-left:12px}
+.cat-list{list-style:none}
+.cat-list li{margin-bottom:16px}
+.cat-list a{display:flex;align-items:center;justify-content:space-between;color:var(--muted);text-decoration:none;font-size:14px;padding:10px 0;border-bottom:1px dotted var(--border);transition:color .3s}
+.cat-list a:hover{color:var(--accent)}
+.cat-list i{color:var(--accent);font-size:12px}
+
+/* FOOTER - SOFT */
+footer{background:var(--accent2);margin-top:80px;border-top:1px solid var(--accent);color:#fff}
+.footer-inner{max-width:1400px;margin:0 auto;padding:60px 50px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:50px}
+.fl-logo{margin-bottom:20px}
+.fl-name{font-family:'Literata',serif;font-size:32px;color:#fff;letter-spacing:-0.5px;line-height:1;font-weight:400}
+.fl-name span{color:var(--accent-light);font-style:italic}
+.fl-sub{font-size:11px;color:rgba(255,255,255,.6);letter-spacing:4px;text-transform:uppercase;margin-top:10px}
+.fb-text{font-size:14px;line-height:1.8;color:rgba(255,255,255,.7);font-weight:300;max-width:320px}
+.fc h4{font-size:12px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--accent-light);margin-bottom:22px}
+.fc a{display:block;color:rgba(255,255,255,.7);text-decoration:none;font-size:14px;margin-bottom:14px;transition:color .3s}
+.fc a:hover{color:#fff}
+.fc i{margin-right:10px;font-size:13px;color:var(--accent-light)}
+.footer-btm{border-top:1px solid rgba(255,255,255,.2);max-width:1400px;margin:0 auto;padding:18px 50px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12px;color:rgba(255,255,255,.6)}
+.footer-btm a{color:rgba(255,255,255,.6);text-decoration:none;margin-left:16px;transition:color .3s}
+.footer-btm a:hover{color:#fff}
+.admin-link{position:fixed;bottom:30px;right:30px;background:var(--accent);color:#fff;width:60px;height:60px;border-radius:30px;display:flex;align-items:center;justify-content:center;text-decoration:none;opacity:0;transition:opacity .3s,transform .3s;box-shadow:0 15px 30px rgba(166,135,110,.3)}
+body:hover .admin-link{opacity:.7}
+.admin-link:hover{opacity:1!important;transform:scale(1.1);background:var(--accent2)}
+.admin-link i{font-size:24px}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+  .hero{grid-template-columns:1fr}
+  .hero-side{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .main{grid-template-columns:1fr}
+  .sidebar{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .footer-inner{grid-template-columns:1fr 1fr;gap:40px}
+}
+@media(max-width:768px){
+  .hdr-right{display:none}
+  .hamburger{display:flex}
+  .nav-links,.nav-icon{display:none}
+  .hero-side{grid-template-columns:1fr}
+  .posts-grid{grid-template-columns:1fr}
+  .sidebar{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr;gap:32px}
+  .hero-title{font-size:36px}
+  .hdr{padding:20px}
+  .main{padding:0 20px}
+}
+@media(max-width:480px){
+  .top-bar{display:none}
+  .logo-name{font-size:40px}
+  .hero{padding:0 20px}
+  .main{padding:0 20px}
+  .hero-feature-body{padding:24px}
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="tb-inner">
+    <div class="tb-left"><i class="fas fa-sliders-h"></i> ZWISCHENTON — DIE FEINEN NUANCEN</div>
+    <div class="tb-right">
+      <a href="#"><i class="fas fa-envelope"></i>NEWSLETTER</a>
+      <a href="#"><i class="fas fa-archive"></i>ARCHIV</a>
+      <a href="#"><i class="fas fa-info-circle"></i>IMPRESSUM</a>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="hdr">
+    <a href="index.html" class="logo">
+      <div class="logo-name">Zwischen<span>Ton</span></div>
+      <div class="logo-sub">NUANCEN</div>
+    </a>
+    <div class="hdr-right">
+      <div class="hdr-search">
+        <input type="text" placeholder="SUCHEN...">
+        <i class="fas fa-search"></i>
+      </div>
+      <a href="admin.html" class="hdr-cta"><i class="fas fa-pen"></i>BEITRAG</a>
+    </div>
+    <button class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-links">
+      <a href="index.html" class="active">START</a>
+      <a href="index.html">LITERATUR</a>
+      <a href="index.html">PHILOSOPHIE</a>
+      <a href="index.html">KUNST</a>
+      <a href="index.html">MUSIK</a>
+      <a href="index.html">THEATER</a>
+      <a href="index.html">FILM</a>
+      <a href="index.html">GESELLSCHAFT</a>
+    </div>
+    <div class="nav-icon">
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-pinterest"></i></a>
+      <a href="#"><i class="fab fa-spotify"></i></a>
+    </div>
+  </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="index.html">START</a>
+    <a href="index.html">LITERATUR</a>
+    <a href="index.html">PHILOSOPHIE</a>
+    <a href="index.html">KUNST</a>
+    <a href="index.html">MUSIK</a>
+    <a href="index.html">THEATER</a>
+    <a href="index.html">FILM</a>
+    <a href="index.html">GESELLSCHAFT</a>
+  </div>
+</nav>
+
+<div id="hero-section" class="hero" style="display:none">
+  <div class="hero-feature" id="hero-feature"></div>
+  <div class="hero-side" id="hero-side"></div>
+</div>
+<div class="hero-empty" id="hero-empty">
+  <div class="hero-empty-inner"><h3>WILLKOMMEN BEIM ZWISCHENTON</h3><p>Erstelle deinen ersten Artikel im Admin-Bereich.</p></div>
+</div>
+
+<div class="nuance-line">
+  <div class="nl-inner">
+    <div class="nl-item"><i class="fas fa-circle"></i> <span>NEU</span> FEINDIFFERENZEN</div>
+    <div class="nl-item"><i class="fas fa-circle"></i> ZWISCHENTÖNE</div>
+    <div class="nl-item"><i class="fas fa-circle"></i> SCHATTEN</div>
+    <div class="nl-item"><i class="fas fa-circle"></i> NUANCEN</div>
+    <div class="nl-item"><i class="fas fa-circle"></i> ABSTUFUNGEN</div>
+    <div class="nl-item"><i class="fas fa-circle"></i> GRADATIONEN</div>
+  </div>
+</div>
+
+<div class="main">
+  <div>
+    <div class="sec-hd">
+      <div class="sec-hd-icon"><i class="fas fa-sliders-h"></i></div>
+      <div class="sec-hd-title">NEUE NUANCEN</div>
+      <div class="sec-hd-line"></div>
+      <div class="sec-hd-count" id="sec-count">0 BEITRÄGE</div>
+    </div>
+    <div class="posts-grid" id="posts-list">
+      <div class="empty-state"><h3>NOCH KEINE ARTIKEL</h3><p>Erstelle deinen ersten Artikel im Admin-Bereich.</p></div>
+    </div>
+  </div>
+  <aside class="sidebar">
+    <div class="about-box">
+      <div class="ab-title">ZWISCHENTON</div>
+      <div class="ab-text">Das Magazin für Zwischentöne, Differenzierungen und die Kunst des genauen Hinsehens.</div>
+      <a href="#" class="ab-link">MEHR <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="widget">
+      <div class="w-hd"><i class="fas fa-clock"></i><div class="w-hd-title">NEUESTE</div></div>
+      <div class="w-body" id="sidebar-recent"></div>
+    </div>
+    <div class="widget">
+      <div class="w-hd"><i class="fas fa-tags"></i><div class="w-hd-title">THEMEN</div></div>
+      <div class="w-body">
+        <ul class="cat-list">
+          <li><a href="#">LITERATUR <i class="fas fa-arrow-right"></i></a></li>
+          <li><a href="#">PHILOSOPHIE <i class="fas fa-arrow-right"></i></a></li>
+          <li><a href="#">KUNST <i class="fas fa-arrow-right"></i></a></li>
+          <li><a href="#">MUSIK <i class="fas fa-arrow-right"></i></a></li>
+          <li><a href="#">THEATER <i class="fas fa-arrow-right"></i></a></li>
+          <li><a href="#">FILM <i class="fas fa-arrow-right"></i></a></li>
+          <li><a href="#">GESELLSCHAFT <i class="fas fa-arrow-right"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="fl-logo">
+        <div class="fl-name">Zwischen<span>Ton</span></div>
+        <div class="fl-sub">NUANCEN</div>
+      </div>
+      <div class="fb-text">ZwischenTon – Das Magazin für Zwischentöne, Differenzierungen und die Kunst des genauen Hinsehens.</div>
+    </div>
+    <div class="fc">
+      <h4>THEMEN</h4>
+      <a href="#"><i class="fas fa-chevron-right"></i>LITERATUR</a>
+      <a href="#"><i class="fas fa-chevron-right"></i>PHILOSOPHIE</a>
+      <a href="#"><i class="fas fa-chevron-right"></i>KUNST</a>
+      <a href="#"><i class="fas fa-chevron-right"></i>MUSIK</a>
+      <a href="#"><i class="fas fa-chevron-right"></i>THEATER</a>
+    </div>
+    <div class="fc">
+      <h4>SERVICE</h4>
+      <a href="#"><i class="fas fa-chevron-right"></i>NEWSLETTER</a>
+      <a href="#"><i class="fas fa-chevron-right"></i>ARCHIV</a>
+      <a href="#"><i class="fas fa-chevron-right"></i>RSS FEED</a>
+    </div>
+    <div class="fc">
+      <h4>INFO</h4>
+      <a href="#"><i class="fas fa-chevron-right"></i>ÜBER UNS</a>
+      <a href="#"><i class="fas fa-chevron-right"></i>IMPRESSUM</a>
+      <a href="#"><i class="fas fa-chevron-right"></i>DATENSCHUTZ</a>
+      <a href="#"><i class="fas fa-chevron-right"></i>KONTAKT</a>
+    </div>
+  </div>
+  <div class="footer-btm">
+    <span>&copy; 2026 ZWISCHENTON — ALLE RECHTE VORBEHALTEN</span>
+    <div><a href="#">IMPRESSUM</a><a href="#">DATENSCHUTZ</a></div>
+  </div>
+</footer>
+<a href="admin.html" class="admin-link"><i class="fas fa-sliders-h"></i></a>
+
+<script>
+// Constants
+const GIST_ID = '42ea11087f40fdba423f8eb0f575ac96';
+const SITE_NAME = 'zwischenton';
+const RAW_URL = `https://gist.githubusercontent.com/Hamzamain-spec/${GIST_ID}/raw/posts.json`;
+
+function toggleMenu(){document.getElementById('mobile-nav').classList.toggle('open');}
+
+async function loadPosts() {
+  try {
+    const response = await fetch(RAW_URL);
+    const allPosts = await response.json();
+    
+    // Filter posts by site name
+    const posts = Array.isArray(allPosts) 
+      ? allPosts.filter(p => p.site === SITE_NAME).reverse()
+      : [];
+    
+    document.getElementById('sec-count').textContent = posts.length + ' BEITRÄGE';
+    
+    if (!posts.length) {
+      document.getElementById('hero-empty').style.display = 'block';
+      document.getElementById('hero-section').style.display = 'none';
+      document.getElementById('posts-list').innerHTML = '<div class="empty-state"><h3>NOCH KEINE ARTIKEL</h3><p>Erstelle deinen ersten Artikel im Admin-Bereich.</p></div>';
+      return;
+    }
+    
+    document.getElementById('hero-section').style.display = 'grid';
+    document.getElementById('hero-empty').style.display = 'none';
+    
+    // Hero feature (latest post)
+    const p0 = posts[0];
+    const fd = new Date(p0.date).toLocaleDateString('de-DE', {day:'numeric', month:'long', year:'numeric'});
+    const fullText0 = p0.content.replace(/<[^>]+>/g, '');
+    const heroExc = fullText0.length > 180 ? fullText0.substring(0, fullText0.lastIndexOf(' ', 180)) + '...' : fullText0;
+    
+    const hf = document.getElementById('hero-feature');
+    hf.onclick = () => location.href = 'post.html?id=' + p0.id;
+    hf.innerHTML = `
+      <div class="hero-feature-img"><div class="hfi-icon"><i class="fas fa-sliders-h"></i></div><div class="hfi-label">NEU</div></div>
+      <div class="hero-feature-body">
+        <div class="hero-cat">${p0.category || 'ALLGEMEIN'}</div>
+        <div class="hero-title">${p0.title}</div>
+        <div class="hero-excerpt">${heroExc}</div>
+        <div class="hero-meta"><i class="fas fa-user"></i> <strong>${p0.author || 'REDAKTION'}</strong> <span>·</span> <i class="fas fa-calendar-alt"></i> ${fd}</div>
+      </div>`;
+    
+    // Hero side (next 3 posts)
+    const hs = document.getElementById('hero-side');
+    hs.innerHTML = '';
+    posts.slice(1, 4).forEach(p => {
+      hs.innerHTML += `<div class="hs-item" onclick="location.href='post.html?id=${p.id}'">
+        <div class="hsi-cat">${p.category || 'ALLGEMEIN'}</div>
+        <div class="hsi-title">${p.title}</div>
+        <div class="hsi-meta"><i class="fas fa-user"></i> ${p.author || 'REDAKTION'} · <i class="fas fa-calendar-alt"></i> ${new Date(p.date).toLocaleDateString('de-DE')}</div>
+      </div>`;
+    });
+    
+    // Posts grid
+    const pl = document.getElementById('posts-list');
+    pl.innerHTML = '';
+    posts.forEach((p, i) => {
+      const date = new Date(p.date).toLocaleDateString('de-DE', {day:'numeric', month:'long', year:'numeric'});
+      const fullText = p.content.replace(/<[^>]+>/g, '');
+      const exc = fullText.length > 100 ? fullText.substring(0, fullText.lastIndexOf(' ', 100)) + '...' : fullText;
+      
+      pl.innerHTML += `<div class="post-card" onclick="location.href='post.html?id=${p.id}'">
+        <div class="post-card-img"><div class="pci-icon"><i class="fas fa-waveform"></i></div><div class="pci-cat">${p.category || 'ALLGEMEIN'}</div></div>
+        <div class="post-card-body">
+          <div class="pc-meta"><i class="fas fa-user"></i> ${p.author || 'REDAKTION'} <span>·</span> <i class="fas fa-clock"></i> ${Math.max(1, Math.round(p.content.replace(/<[^>]+>/g, '').split(' ').length / 200))} MIN.</div>
+          <div class="pc-title">${p.title}</div>
+          <div class="pc-exc">${exc}</div>
+          <div class="pc-foot">
+            <span class="pc-author"><i class="fas fa-calendar-alt"></i> ${new Date(p.date).toLocaleDateString('de-DE', {day:'numeric', month:'short'})}</span>
+            <span class="pc-read">LESEN <i class="fas fa-arrow-right"></i></span>
+          </div>
+        </div>
+      </div>`;
+    });
+    
+    // Sidebar recent
+    const sr = document.getElementById('sidebar-recent');
+    sr.innerHTML = '';
+    posts.slice(0, 5).forEach(p => {
+      sr.innerHTML += `<div class="wi" onclick="location.href='post.html?id=${p.id}'">
+        <div class="wi-cat">${p.category || 'ALLGEMEIN'}</div>
+        <a class="wi-title" href="post.html?id=${p.id}">${p.title}</a>
+        <div class="wi-meta"><i class="fas fa-user"></i> ${p.author || 'REDAKTION'} · <i class="fas fa-calendar-alt"></i> ${new Date(p.date).toLocaleDateString('de-DE')}</div>
+      </div>`;
+    });
+    
+  } catch (e) {
+    console.error('Error loading posts:', e);
+    document.getElementById('hero-empty').style.display = 'block';
+  }
+}
+
+// Load posts on page load
+loadPosts();
+
+// Auto-refresh every 30 seconds
+setInterval(loadPosts, 30000);
+</script>
+</body>
+</html>
